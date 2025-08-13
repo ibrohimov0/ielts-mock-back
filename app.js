@@ -8,6 +8,9 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 const cors = require('cors');
 require('dotenv').config();
 
+// routes
+const loginRoute = require("./routes/login")
+
 /**
  * @swagger
  * tags:
@@ -38,6 +41,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api", loginRoute);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, options));
 
 app.use((error, req, res, next) => {
