@@ -1,0 +1,20 @@
+{
+    "swaggerDefinition": {
+        "info": {
+            "title": "Ielts Mock Api",
+            "description": "Task for Ielts Mock",
+            "version": "1.0.0",
+            "servers": ["https:localhost:5000"],
+            "basePath": "/",
+            "schemes": ["http", "https"]
+        },
+        "securityDefinitions": {
+            "token": {
+                "type": "apiKey",
+                "name": "token",
+                "in": "header"
+            }
+        }
+    },
+    "apis": ["app.js", "./routes/*.js"]
+}
