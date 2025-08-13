@@ -40,19 +40,19 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, options));
 
-app.use((error,req,res,next) => {
+app.use((error, req, res, next) => {
     console.log(error);
     const status = error.status || 500;
     const message = error.message || 'Internal Server Error';
-    res.status(status).json({message: message});
+    res.status(status).json({ message: message });
 })
 
-mongoose.connect(proccess.env.ADMIN_KEY)
-.then(() => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-})
-.catch((err) => {
-    console.error("Database connection error:", err);
-});
-
-exports.api = functions.https.onRequest(app);
+mongoose.connect(process.env.ADMIN_KEY)
+    .then(() => {
+        app.listen(process.env.PORT || 8080, () => {
+            console.log(`Server is running on port ${process.env.PORT || 8080}`);
+        })
+    })
+    .catch((err) => {
+        console.error("Database connection error:", err);
+    });
