@@ -10,12 +10,13 @@ require('dotenv').config();
 
 // routes
 const loginRoute = require("./routes/login")
+const testsRoute = require("./routes/tests")
 
 /**
  * @swagger
  * tags:
  *      - name: login
- *      - name: data
+ *      - name: tests
  */
 
 var options = {
@@ -41,7 +42,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", loginRoute);
+app.use("/api", loginRoute,testsRoute);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, options));
 
 app.use((error, req, res, next) => {
