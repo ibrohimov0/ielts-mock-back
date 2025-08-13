@@ -24,7 +24,7 @@ const { postLogin } = require('../controllers/login');
  *                  name:
  *                      type: string
  *                  password:
- *                     type: string
+ *                      type: string
  *      responses:
  *          '200':  
  *              description: Successfully
@@ -35,7 +35,7 @@ const { postLogin } = require('../controllers/login');
  *          '403':
  *              description: Forbidden
  *          '500':
- *          description: Internal Server Error  
+ *              description: Internal Server Error  
 */
 router.post('/login',postLogin)
 
