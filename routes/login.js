@@ -1,6 +1,6 @@
 const express = require('express');
-const { postLogin } = require('../controllers/login');
 const router = express.Router();
+const { postLogin } = require('../controllers/login');
 
 /**
  * @swagger
@@ -25,7 +25,7 @@ const router = express.Router();
  *                      type: string
  *                  password:
  *                     type: string
- *     responses:
+ *      responses:
  *          '200':  
  *              description: Successfully
  *          '400':
