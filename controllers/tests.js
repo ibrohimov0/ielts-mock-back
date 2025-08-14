@@ -46,18 +46,33 @@ exports.postTest = async (req, res, next) => {
     }
 }
 
-exports.patchTest = async(req,res,next) => {
-    // return await TestModel.().then(test => {
-    //     res.status(200).json(test)
-    // }).catch(err => {
-    //     if (!err.statusCode) {
-    //         err.statusCode = 500
-    //     }
-    //     next(err)
-    // })
+exports.patchTest = async (req, res, next) => {
+    try {
+        await jwt.verify(req.headers.token, process.env.JWT_KEY)
+        console.log("okay");
+
+        if (!req.body || !req.params.id) {
+            return res.status(400).json({ message: 'ID and Body required!' });
+        }
+        console.log(req.params.id,req.body);
+        
+        return await TestModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).then(test => {
+            if (!test) {
+                return res.status(404).json({ message: 'Test not found!' });
+            }
+            res.status(200).json(test)
+        }).catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+    } catch {
+        return res.status(403).json({ message: "Not Allowed! Forbidden" })
+    }
 }
 
-exports.deleteTest = async(req,res,next) => {
+exports.deleteTest = async (req, res, next) => {
     // return await TestModel.().then(test => {
     //     res.status(200).json(test)
     // }).catch(err => {

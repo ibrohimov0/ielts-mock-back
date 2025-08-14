@@ -31,6 +31,8 @@ router.get('/tests', getTests)
  *  post:
  *      tags:
  *          - tests
+ *      security:
+ *          - token: []
  *      description: Post Test
  *      produces:
  *          - application/json
@@ -85,6 +87,8 @@ router.post('/tests', postTest)
  *  patch:
  *      tags:
  *          - tests
+ *      security:
+ *          - token: []
  *      description: Update Test
  *      produces:
  *          - application/json
@@ -123,7 +127,7 @@ router.post('/tests', postTest)
  *              description: Internal Server Error  
  */
 
-router.patch('/tests/{id}', patchTest)
+router.patch('/tests/:id', patchTest)
 
 /**
  * @swagger
@@ -131,6 +135,8 @@ router.patch('/tests/{id}', patchTest)
  *  delete:
  *      tags:
  *          - tests
+ *      security:
+ *          - token: []
  *      description: Delete One Test
  *      produces:
  *          - application/json
@@ -152,6 +158,6 @@ router.patch('/tests/{id}', patchTest)
  *          '500':
  *              description: Internal Server Error  
 */
-router.delete('/tests/{id}', deleteTest)
+router.delete('/tests/:id', deleteTest)
 
 module.exports = router;

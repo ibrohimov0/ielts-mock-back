@@ -5,7 +5,7 @@ const schemaTest = new mongoose.Schema({
         type: String,
         required: true
     },
-    options:{
+    options: {
         type: [
             {
                 text: {
@@ -16,6 +16,16 @@ const schemaTest = new mongoose.Schema({
                     type: Boolean,
                     required: true
                 }
+            }
+        ],
+        validate: [
+            {
+                validator: arr => arr.length === 4,
+                message: "Options must contain exactly 4 items"
+            },
+            {
+                validator: arr => arr.filter(opt => opt.isCorrect).length === 1,
+                message: "Exactly 1 option must be correct"
             }
         ]
     }
