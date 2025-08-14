@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const TestModel = require("../models/TestModel")
+const _ = require("lodash")
 
 exports.getTests = async (req, res, next) => {
     return await TestModel.aggregate([
@@ -49,17 +50,26 @@ exports.postTest = async (req, res, next) => {
 exports.patchTest = async (req, res, next) => {
     try {
         await jwt.verify(req.headers.token, process.env.JWT_KEY)
-        console.log("okay");
 
         if (!req.body || !req.params.id) {
             return res.status(400).json({ message: 'ID and Body required!' });
         }
-        console.log(req.params.id,req.body);
-        
+
+        const test = await TestModel.findById(req.params.id);
+        if (!test) {
+            return res.status(404).json({ message: 'Test not found!' });
+        }
+
+        for (let key in req.body) {
+            _.set(test, key, req.body[key]);
+        }
+
+        const trueContent = test.options.filter(opt => opt.isCorrect === true).length
+        if (trueContent !== 1) {
+            return res.status(400).json({ error: 'Exactly 1 option must be correct' });
+        }
+
         return await TestModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).then(test => {
-            if (!test) {
-                return res.status(404).json({ message: 'Test not found!' });
-            }
             res.status(200).json(test)
         }).catch(err => {
             if (!err.statusCode) {
