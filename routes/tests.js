@@ -1,5 +1,5 @@
 const express = require('express');
-const { getTests, postTest, patchTest, deleteTest } = require('../controllers/tests');
+const { getTests, postTest, patchTest, deleteTest, getAllTests } = require('../controllers/tests');
 const router = express.Router();
 
 /**
@@ -24,6 +24,31 @@ const router = express.Router();
  *              description: Internal Server Error  
 */
 router.get('/tests', getTests)
+
+/**
+ * @swagger
+ * /api/tests/all:
+ *  get:
+ *      tags:
+ *          - tests
+ *      security:
+ *          - token: []
+ *      description: Get All tests
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          '200':  
+ *              description: Successfully
+ *          '400':
+ *              description: Bad Request
+ *          '404':
+ *              description: Not Found
+ *          '403':
+ *              description: Forbidden
+ *          '500':
+ *              description: Internal Server Error  
+*/
+router.get('/tests/all', getAllTests)
 
 /**
  * @swagger
@@ -78,7 +103,6 @@ router.get('/tests', getTests)
  *          '500':
  *              description: Internal Server Error  
  */
-
 router.post('/tests', postTest)
 
 /**
@@ -126,7 +150,6 @@ router.post('/tests', postTest)
  *          '500':
  *              description: Internal Server Error  
  */
-
 router.patch('/tests/:id', patchTest)
 
 /**

@@ -15,6 +15,23 @@ exports.getTests = async (req, res, next) => {
     })
 }
 
+exports.getAllTests = async (req, res, next) => {
+    try {
+        await jwt.verify(req.headers.token, process.env.JWT_KEY)
+
+        return await TestModel.find().sort({ createdAt: -1 }).then(tests => {
+            res.status(200).json(tests)
+        }).catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+    } catch {
+        return res.status(403).json({ message: "Not Allowed! Forbidden" })
+    }
+}
+
 exports.postTest = async (req, res, next) => {
     try {
         await jwt.verify(req.headers.token, process.env.JWT_KEY)
