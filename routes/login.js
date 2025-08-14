@@ -15,6 +15,7 @@ const { postLogin } = require('../controllers/login');
  *        - in: body
  *          name: Get Name
  *          password: Get Password
+ *          required: true
  *          schema:
  *              type: object
  *              required:

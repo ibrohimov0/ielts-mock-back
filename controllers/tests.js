@@ -13,3 +13,14 @@ exports.getTests = async (req, res, next) => {
         next(err)
     })
 }
+
+exports.putTest = async(req,res,next) => {
+    return await TestModel.findOneAndUpdate().then(test => {
+        res.status(200).json(test)
+    }).catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500
+        }
+        next(err)
+    })
+}
