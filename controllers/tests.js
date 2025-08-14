@@ -83,12 +83,25 @@ exports.patchTest = async (req, res, next) => {
 }
 
 exports.deleteTest = async (req, res, next) => {
-    // return await TestModel.().then(test => {
-    //     res.status(200).json(test)
-    // }).catch(err => {
-    //     if (!err.statusCode) {
-    //         err.statusCode = 500
-    //     }
-    //     next(err)
-    // })
+    try {
+        await jwt.verify(req.headers.token, process.env.JWT_KEY)
+
+        if (!req.params.id) {
+            return res.status(400).json({ message: 'ID required!' });
+        }
+
+        return await TestModel.findByIdAndDelete(req.params.id).then(test => {
+            if (!test) {
+                return res.status(404).json({ message: 'Test not found!' });
+            }
+            res.status(200).json(test)
+        }).catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500
+            }
+            next(err)
+        })
+    } catch {
+        return res.status(403).json({ message: "Not Allowed! Forbidden" })
+    }
 }
