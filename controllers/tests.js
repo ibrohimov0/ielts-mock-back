@@ -14,8 +14,30 @@ exports.getTests = async (req, res, next) => {
     })
 }
 
-exports.putTest = async(req,res,next) => {
-    return await TestModel.findOneAndUpdate().then(test => {
+exports.postTest = async(req,res,next) => {
+    return await TestModel.().then(test => {
+        res.status(200).json(test)
+    }).catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500
+        }
+        next(err)
+    })
+}
+
+exports.patchTest = async(req,res,next) => {
+    return await TestModel.().then(test => {
+        res.status(200).json(test)
+    }).catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500
+        }
+        next(err)
+    })
+}
+
+exports.deleteTest = async(req,res,next) => {
+    return await TestModel.().then(test => {
         res.status(200).json(test)
     }).catch(err => {
         if (!err.statusCode) {

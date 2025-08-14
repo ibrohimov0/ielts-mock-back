@@ -1,5 +1,5 @@
 const express = require('express');
-const { getTests } = require('../controllers/tests');
+const { getTests, postTest, patchTest, deleteTest } = require('../controllers/tests');
 const router = express.Router();
 
 /**
@@ -77,6 +77,8 @@ router.get('/tests', getTests)
  *              description: Internal Server Error  
  */
 
+router.post('/tests', postTest)
+
 /**
  * @swagger
  * /api/tests/{id}:
@@ -121,6 +123,8 @@ router.get('/tests', getTests)
  *              description: Internal Server Error  
  */
 
+router.patch('/tests/{id}', patchTest)
+
 /**
  * @swagger
  * /api/tests/{id}:
@@ -148,5 +152,6 @@ router.get('/tests', getTests)
  *          '500':
  *              description: Internal Server Error  
 */
+router.delete('/tests/{id}', deleteTest)
 
 module.exports = router;
