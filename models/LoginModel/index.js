@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 
 const schemaLogin = new mongoose.Schema({
-    name: String,
-    password: String
+    name: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true });
 
 const LoginModel = mongoose.model("Login", schemaLogin)
